@@ -4,11 +4,11 @@ export function AddGroceryItem({ baseUrl, fetchGroceryItems }) {
   const [groceryInputText, updateGroceryInputText] = useState("");
   async function handleAddingItems() 
   {
-    const createTask = await axios.post(`${baseUrl}/login/add`, {
-      groceryItem: groceryInputText,
-      isPurchased: false,
-    });
-    console.log(createTask);
+    // const createTask = await axios.post(`${baseUrl}/login/add`, {
+    //   groceryItem: groceryInputText,
+    //   isPurchased: false,
+    // });
+    // console.log(createTask);
     alert("Grocery item added successfully");
     updateGroceryInputText("");
     fetchGroceryItems();

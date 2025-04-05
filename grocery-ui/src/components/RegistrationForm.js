@@ -1,29 +1,31 @@
 import { useState } from "react";
 import { auth } from "../firebase";
-import { useHistory } from "react-router-dom";
-export function LoginForm() {
+import { createUserWithEmailAndPassword } from "@firebase/auth";
+import { useNavigate } from "react-router-dom";
+
+export function RegistrationForm() {
   const [email, updateEmailText] = useState("");
   const [password, updatePasswordText] = useState("");
-  const history = useHistory();
+  const [confirmPassword, updateConfirmPasswordField] = useState("");
+  const navigate = useNavigate();
 
-  async function handleLogin() {
-    try {
-      // Method is to validate the user credentials
-      const { user } = await auth.signInWithEmailAndPassword(email, password);
-      console.log(user);
-      localStorage.setItem("userToken", user.refreshToken);
-      history.push("/home");
-    } catch (e) {
-      console.log(e);
-      alert(e.message);
+  async function handleRegistration() {
+    if (password === confirmPassword) {
+      // Method to register the user using firebase
+      // const { user } = await createUserWithEmailAndPassword(
+      //   auth,
+      //   email,
+      //   password
+      // );
+      // localStorage.setItem("userToken", user.refreshToken);
+      navigate("/home");
+    } else {
+      alert("Passwords do not match");
     }
-  }
-  function handleRegistrationRedirect() {
-    history.push("/register");
   }
   return (
     <div className="w-100">
-      <h1>Login</h1>
+      <h1>Registration</h1>
       <div className="w-50 m-auto form-element-container">
         <div className="form-group text-left">
           <label htmlFor="exampleInputEmail1">Email address</label>
@@ -51,19 +53,23 @@ export function LoginForm() {
             onChange={(e) => updatePasswordText(e.target.value)}
           />
         </div>
+        <div className="form-group mt-3">
+          <label htmlFor="exampleInputPassword1">Confirm Password</label>
+          <input
+            type="password"
+            className="form-control"
+            id="exampleInputPassword1"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => updateConfirmPasswordField(e.target.value)}
+          />
+        </div>
         <button
           type="submit"
           className="btn btn-primary mt-3"
-          onClick={() => handleLogin()}
+          onClick={() => handleRegistration()}
         >
           Submit
-        </button>
-        <h3>Not created an account yet?</h3>
-        <button
-          className="btn btn-success"
-          onClick={() => handleRegistrationRedirect()}
-        >
-          Go To Registration
         </button>
       </div>
     </div>

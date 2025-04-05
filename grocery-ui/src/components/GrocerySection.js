@@ -2,7 +2,7 @@
  * Module to show grocery section in app
  */
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import classNamesModule from "classnames";
 import { AddGroceryItem } from "./AddGroceryItem";
@@ -10,40 +10,40 @@ import { AddGroceryItem } from "./AddGroceryItem";
 const API_BASE_URL = "";
 export function GrocerySection(props) {
   const [groceryItems, updateGroceryItems] = useState([]);
-  const history = useHistory();
+  const navigate = useNavigate();
   
   async function fetchGroceryItems() {
 
-    const groceryData = await axios.get(`${API_BASE_URL}/login/getAll`);
-    const dataFromAPI = groceryData.data.results;
-    updateGroceryItems(dataFromAPI);
+    // const groceryData = await axios.get(`${API_BASE_URL}/login/getAll`);
+    // const dataFromAPI = groceryData.data.results;
+    // updateGroceryItems(dataFromAPI);
   }
   useEffect(() => {
-    fetchGroceryItems();
+    // fetchGroceryItems();
   }, []);
   async function handlePurchaseUpdate(item) {
     console.log(item);
-    const updateData = await axios.put(
-      `${API_BASE_URL}/grocery/updatePurchaseStatus`,
-      {
-        _id: item._id,
-        isPurchased: true,
-      }
-    );
-    console.log(updateData);
+    // const updateData = await axios.put(
+    //   `${API_BASE_URL}/grocery/updatePurchaseStatus`,
+    //   {
+    //     _id: item._id,
+    //     isPurchased: true,
+    //   }
+    // );
+    // console.log(updateData);
     alert("Item purchase status updated successfully");
     fetchGroceryItems();
   }
   async function handleDeleteOperation(item) {
-    const deleteResponse = await axios.delete(
-      `${API_BASE_URL}/grocery/deleteGroceryItem`,
-      {
-        data: {
-          _id: item._id,
-        },
-      }
-    );
-    console.log(deleteResponse.data);
+    // const deleteResponse = await axios.delete(
+    //   `${API_BASE_URL}/grocery/deleteGroceryItem`,
+    //   {
+    //     data: {
+    //       _id: item._id,
+    //     },
+    //   }
+    // );
+    // console.log(deleteResponse.data);
     alert("Data deleted successfully");
     fetchGroceryItems();
   }
@@ -76,8 +76,8 @@ export function GrocerySection(props) {
     );
   }
   function handleLogout() {
-    localStorage.removeItem("userToken");
-    history.push("/login");
+    // localStorage.removeItem("userToken");
+    navigate("/login");
   }
   function renderGroceryItems() {
     return groceryItems.map((item) => {
